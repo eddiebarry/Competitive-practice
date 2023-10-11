@@ -89,13 +89,13 @@ int main()
 
 	int x,y;
 
-	long double max_dist = 2.0*acos(-1);
+	long double max_dist = 2.0*PI;
 
 	REP(i,tc){
 		long double diff = angle_with_x[(i+1)%tc].first -  angle_with_x[i].first;
 		// long double angle2 = ;
 		if (diff < 0){
-			diff += 2.0*acos(-1);
+			diff += 2.0*PI;
 		}
 
 		if(diff<max_dist){

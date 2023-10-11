@@ -30,6 +30,7 @@
 #include <assert.h>
 
 using namespace std;
+
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
 #define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
 
@@ -38,6 +39,8 @@ using namespace std;
 
 #define all(cont) cont.begin(), cont.end()
 #define rall(cont) cont.end(), cont.begin()
+
+#define print_cont(cont) std::copy(all(cont), std::ostream_iterator<decltype (cont)::value_type>(std::cout, " ")); cout<<"\n";
 
 #define FOREACH(it, l) for (auto it = l.begin(); it != l.end(); it++)
 #define IN(A, B, C) assert( B <= A && A <= C)
@@ -59,17 +62,46 @@ typedef map<int,int> MPII;
 typedef set<int> SETI;
 typedef multiset<int> MSETI;
 typedef long long int ll;
+typedef long double ld;
 typedef unsigned long long int ull;
+typedef vector<long long> VLL;
 
 /********** Main()  function **********/
 int main()
-{
-	int tc;
+{	
+	ll tc;
+	ld y, x;
 	cin>>tc;
 
-	while(tc--){
-
+	vector< pair<ld, int> > angle;
+	REP(i,tc){
+		cin>>x>>y;
+		ld angle_with_x_axis = atan2(y,x);
+		angle.push_back(MP(angle_with_x_axis, i));
 	}
+	sort(all(angle));
+	angle.push_back(angle[0]);
+
+	ld angle_min = 2.0 * PI;
+	ll ans_l, ans_r;
+
+	REP(i, tc){
+		ld angle_dif = angle[i+1].first - angle[i].first;		
+		angle_dif = angle_dif < 0 ? -angle_dif: angle_dif;
+		
+		if(angle_dif > PI){
+			angle_dif = 2.0*PI - angle_dif;
+		}
+
+		if (angle_dif < angle_min){
+			ans_l = angle[i+1].second;
+			ans_r = angle[i].second;
+			angle_min = angle_dif;
+		}
+	}
+	cout<<ans_l+1<<" "<<ans_r+1;
+
 	return 0;
+	
 }
 /********  Main() Ends Here *************/

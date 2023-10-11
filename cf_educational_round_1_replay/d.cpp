@@ -30,6 +30,7 @@
 #include <assert.h>
 
 using namespace std;
+
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
 #define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
 
@@ -38,6 +39,8 @@ using namespace std;
 
 #define all(cont) cont.begin(), cont.end()
 #define rall(cont) cont.end(), cont.begin()
+
+#define print_cont(cont) std::copy(all(cont), std::ostream_iterator<decltype (cont)::value_type>(std::cout, " ")); cout<<"\n";
 
 #define FOREACH(it, l) for (auto it = l.begin(); it != l.end(); it++)
 #define IN(A, B, C) assert( B <= A && A <= C)
@@ -60,16 +63,87 @@ typedef set<int> SETI;
 typedef multiset<int> MSETI;
 typedef long long int ll;
 typedef unsigned long long int ull;
+typedef vector<long long> VLL;
+
+int arr[1001][1001];
+int visited[1001][1001];
+
+int curr_component;
+
+int get_flattened_idx(int x, int y){
+	return x * 1000 + y;
+}
 
 /********** Main()  function **********/
 int main()
-{
-	int tc;
-	cin>>tc;
+{	
+	ll  n, m, tc;
+	cin>>n>>m>>tc;
+	REP(i,n){
+		string x;
+		cin>>x;
+		REP(j,m){
+			arr[i][j] = x[j] == '*' ? 0 : 1;
+		}
+	}
+	
+	
 
-	while(tc--){
+	int x,y;
+	MPII ans;	
+	REP(i,tc){
+		curr_component = i+1;
+		cin>>x>>y;
+		x--;
+		y--;
+		
+		if(visited[x][y]==0){
+			// not visited
+			stack<int> to_visit;
+			int curr_ans = 0;
 
+			// SETI to_visit;
+			to_visit.push(get_flattened_idx(x,y));
+			while(!to_visit.empty()){
+				int flat_idx = to_visit.top();
+				to_visit.pop();
+				int i = flat_idx / 1000, j = flat_idx % 1000;
+				if(visited[i][j]!=0){
+					continue;
+				}
+
+				visited[i][j] = curr_component;
+				if(arr[i+1][j]==0){
+					curr_ans++;
+				}else{
+					to_visit.push(get_flattened_idx(i+1,j));
+				}
+				if(arr[i-1][j]==0){
+					curr_ans++;
+				}else{
+					to_visit.push(get_flattened_idx(i-1,j));
+				}
+				if(arr[i][j+1]==0){
+					curr_ans++;
+				}else{
+					to_visit.push(get_flattened_idx(i,j+1));
+				}
+				if(arr[i][j-1]==0){
+					curr_ans++;
+				}
+				else{
+					to_visit.push(get_flattened_idx(i,j-1));
+				}
+			}
+
+			ans[curr_component]=curr_ans;
+			cout<<curr_ans<<"\n";
+		}
+		else{
+			cout<<ans[visited[x][y]]<<"\n";
+		}
 	}
 	return 0;
+	
 }
 /********  Main() Ends Here *************/

@@ -30,6 +30,7 @@
 #include <assert.h>
 
 using namespace std;
+
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
 #define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
 
@@ -38,6 +39,8 @@ using namespace std;
 
 #define all(cont) cont.begin(), cont.end()
 #define rall(cont) cont.end(), cont.begin()
+
+#define print_cont(cont) std::copy(all(cont), std::ostream_iterator<decltype (cont)::value_type>(std::cout, " ")); cout<<"\n";
 
 #define FOREACH(it, l) for (auto it = l.begin(); it != l.end(); it++)
 #define IN(A, B, C) assert( B <= A && A <= C)
@@ -60,16 +63,27 @@ typedef set<int> SETI;
 typedef multiset<int> MSETI;
 typedef long long int ll;
 typedef unsigned long long int ull;
+typedef vector<long long> VLL;
 
 /********** Main()  function **********/
 int main()
-{
-	int tc;
+{	
+	ll tc, n, x;
 	cin>>tc;
 
 	while(tc--){
+		cin>>n;
+		ll sum = n * (n+1);
+		sum /= 2;
 
+		ll x = 1;
+		while(x <= n){
+			sum -= 2*x;
+			x *=2;
+		}
+		cout<<sum<<"\n";
 	}
 	return 0;
+	
 }
 /********  Main() Ends Here *************/

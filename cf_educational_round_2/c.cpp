@@ -64,25 +64,11 @@ typedef unsigned long long int ull;
 /********** Main()  function **********/
 int main()
 {
-	ll tc, n;
+	int tc;
 	cin>>tc;
 
 	while(tc--){
-		cin>>n;
-		VI vec(n);
-		ll min=1e9+1;
-		REP(i,n){
-			cin>>vec[i];
-			if(vec[i]<min){
-				min = vec[i];
-			}
-		}
-		if(min==vec[0]){
-			cout<<"Bob\n";
-		}
-		else{
-			cout<<"Alice\n";
-		}
+
 	}
 	return 0;
 }

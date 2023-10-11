@@ -30,6 +30,7 @@
 #include <assert.h>
 
 using namespace std;
+
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
 #define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
 
@@ -38,6 +39,8 @@ using namespace std;
 
 #define all(cont) cont.begin(), cont.end()
 #define rall(cont) cont.end(), cont.begin()
+
+#define print_cont(cont) std::copy(all(cont), std::ostream_iterator<decltype (cont)::value_type>(std::cout, " ")); cout<<"\n";
 
 #define FOREACH(it, l) for (auto it = l.begin(); it != l.end(); it++)
 #define IN(A, B, C) assert( B <= A && A <= C)
@@ -60,16 +63,34 @@ typedef set<int> SETI;
 typedef multiset<int> MSETI;
 typedef long long int ll;
 typedef unsigned long long int ull;
+typedef vector<long long> VLL;
 
 /********** Main()  function **********/
 int main()
-{
-	int tc;
+{	
+	string x;
+	cin>>x;
+
+
+	ll tc, l, r, k;
 	cin>>tc;
 
 	while(tc--){
-
+		cin>>l>>r>>k;
+		l--;
+		r--;
+		VII vec;
+		for(int idx = l; idx <= r; idx++){
+			// vec[]
+			int offset = idx - l;
+			vec.push_back( MP(x[idx], l + ( (offset + k) % (r - l + 1) ) ) );
+		}
+		for(auto y: vec){
+			x[y.second] = (char)y.first;
+		}
 	}
+	cout<<x;
 	return 0;
+	
 }
 /********  Main() Ends Here *************/
